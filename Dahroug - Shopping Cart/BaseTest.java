@@ -24,6 +24,9 @@ public class BaseTest {
         driver.get("https://ecommerce-playground.lambdatest.io/index.php?route=common/home");
         homePage = new HomePage(driver);
         loginPageProject = new LoginPageProject(driver);
+        homePage.enterClickForLogin();
+        loginPageProject.login("mail1@gmail.com","12345");
+        homePage.clickHomeLink();
     }
 
     @AfterClass
