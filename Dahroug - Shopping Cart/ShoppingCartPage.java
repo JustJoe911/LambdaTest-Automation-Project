@@ -18,8 +18,8 @@ public class ShoppingCartPage {
     By subTotal = By.xpath("//tr[1]/td[2]/strong");
     By total = By.xpath("//tr[4]/td[2]/strong");
     By removeAll = By.xpath("//div[@class=\"input-group-append\"]/button[@class=\"btn btn-danger\"]");
-    By removeProductOne = By.xpath("//button[@onclick=\"cart.remove('223329');\"]");
-    By removeProductTwo = By.xpath("//button[@onclick=\"cart.remove('223330');\"]");
+    By removeProductOne = By.xpath("(//table//button[contains(@class, 'btn-danger')])[2]");
+    By removeProductTwo = By.xpath("(//table//button[contains(@class, 'btn-danger')])[1]");
     By productAddToCart = By.xpath("//button[text()=\"Add to Cart\"]");
     By afterRemoveAllButton = By.xpath("//a[text()=\"Continue\"]");
     By updateButton = By.xpath("//button[@type='submit' and @data-toggle='tooltip']");
@@ -95,7 +95,8 @@ public class ShoppingCartPage {
     }
 
     public void removeFirstProduct(){
-        driver.findElement(removeProductOne).click();
+//        driver.findElement(removeProductOne).click();
+        wait.until(ExpectedConditions.elementToBeClickable(removeProductOne)).click();
     }
 
     public void removeSecondProduct(){
