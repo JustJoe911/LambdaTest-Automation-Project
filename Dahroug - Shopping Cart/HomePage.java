@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.LoginPage;
-
 import java.time.Duration;
 
 public class HomePage {
@@ -15,16 +13,16 @@ public class HomePage {
     By productOne = By.id("mz-product-listing-image-37218399-0-5");
     By productTwo = By.id("mz-product-listing-image-39218404-0-3");
     By badgeCartClick = By.cssSelector("a.cart");
-    By cartPage = By.xpath("//div[@id=\"entry_217850\"]/a");
-    By countOfCart = By.xpath("//div[@class=\"cart-icon\"]/span");
+    By cartPage = By.xpath("//div[@id='entry_217850']/a");
+    By countOfCart = By.xpath("//div[@id='entry_217825']//span");
     By clickLogin = By.xpath("/html/body/div[1]/div[5]/header/div[3]/div[1]/div/div[3]/nav/div/ul/li[6]/a");
-    By homeLink = By.xpath("//a[@href=\"https://ecommerce-playground.lambdatest.io/index.php?route=common/home\"]");
-    By addToCartButton = By.xpath("//div[@id=\"entry_216842\"]/button");
-    //    By addToCartButton = By.cssSelector("button[title=\"Add to Cart\"]");
+    By homeLink = By.xpath("//a[@title='Poco Electro']");
+    By addToCartButton = By.xpath("//div[@id='entry_216842']/button");
+//    By addToCartButton = By.cssSelector("button[title=\"Add to Cart\"]");
 
     public HomePage(WebDriver driver){
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
     }
 
     public void clickHomeLink(){
@@ -32,14 +30,26 @@ public class HomePage {
     }
 
     public LoginPageProject enterClickForLogin(){
-//        wait.until(ExpectedConditions.elementToBeClickable(clickLogin)).click();
-        driver.findElement(clickLogin).click();
+        wait.until(ExpectedConditions.elementToBeClickable(clickLogin)).click();
         return new LoginPageProject(driver);
+    }
+
+    public ShoppingCartPage viewProductOne(){
+        driver.findElement(productOne).click();
+        return new ShoppingCartPage(driver);
+    }
+    public ShoppingCartPage viewProductTwo(){
+        wait.until(ExpectedConditions.elementToBeClickable(productTwo)).click();
+        return new ShoppingCartPage(driver);
     }
 
     public void addProductOneToCart(){
         driver.findElement(productOne).click();
         driver.findElement(addToCartButton).click();
+    }
+
+    public void clickCartButton(){
+        wait.until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
     }
 
     public void addProductTwoToCart(){
