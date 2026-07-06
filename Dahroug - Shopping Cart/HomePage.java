@@ -18,7 +18,6 @@ public class HomePage {
     By clickLogin = By.xpath("/html/body/div[1]/div[5]/header/div[3]/div[1]/div/div[3]/nav/div/ul/li[6]/a");
     By homeLink = By.xpath("//a[@title='Poco Electro']");
     By addToCartButton = By.xpath("//div[@id='entry_216842']/button");
-//    By addToCartButton = By.cssSelector("button[title=\"Add to Cart\"]");
 
     public HomePage(WebDriver driver){
         this.driver = driver;
@@ -38,6 +37,7 @@ public class HomePage {
         driver.findElement(productOne).click();
         return new ShoppingCartPage(driver);
     }
+    
     public ShoppingCartPage viewProductTwo(){
         wait.until(ExpectedConditions.elementToBeClickable(productTwo)).click();
         return new ShoppingCartPage(driver);
