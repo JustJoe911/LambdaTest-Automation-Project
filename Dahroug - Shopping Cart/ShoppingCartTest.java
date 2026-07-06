@@ -11,12 +11,8 @@ public class ShoppingCartTest extends BaseTest {
     private static final Logger log = LoggerFactory.getLogger(ShoppingCartTest.class);
     WebDriverWait wait;
 
-
     @Test
     public void validAddOneProductToTheCart() throws InterruptedException {
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.addProductOneToCart();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
@@ -27,9 +23,6 @@ public class ShoppingCartTest extends BaseTest {
 
     @Test
     public void validMultipleAddProduct() throws InterruptedException {
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.addProductOneToCart();
         homePage.clickHomeLink();
         homePage.addProductTwoToCart();
@@ -43,22 +36,17 @@ public class ShoppingCartTest extends BaseTest {
 
     @Test
     public void removeProduct() throws InterruptedException {
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.addProductOneToCart();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
         shoppingCartPage.removeFirstProduct();
         Thread.sleep(2000);
         Assert.assertTrue(shoppingCartPage.getActualTitleEmptyCart().contains("Shopping Cart  (1.00kg)"));
+        shoppingCartPage.clickRemoveAll();
     }
 
     @Test
     public void emptyTheCart(){
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.addProductOneToCart();
         homePage.clickHomeLink();
         homePage.addProductTwoToCart();
@@ -74,9 +62,6 @@ public class ShoppingCartTest extends BaseTest {
 
     @Test
     public void continueShoppingFromTheCartAfterAddProduct() throws InterruptedException {
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.addProductOneToCart();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
@@ -86,21 +71,14 @@ public class ShoppingCartTest extends BaseTest {
 
     @Test
     public void continueShoppingFromTheCartEmpty() {
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com", "12345");
-        homePage.clickHomeLink();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
         Assert.assertEquals(shoppingCartPage.getActualContinueButton(), shoppingCartPage.getExpectButtonAfterRemoveAll());
         shoppingCartPage.clickContinueAfterRemoveAll();
-
     }
 
     @Test
     public void verifySubTotal(){
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
         shoppingCartPage.clickRemoveAll();
@@ -117,9 +95,6 @@ public class ShoppingCartTest extends BaseTest {
 
     @Test
     public void verifyTotalUpdate() {
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com", "12345");
-        homePage.clickHomeLink();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
         shoppingCartPage.clickRemoveAll();
@@ -136,9 +111,6 @@ public class ShoppingCartTest extends BaseTest {
 
     @Test
     public void increaseProductQuantity() throws InterruptedException {
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
         shoppingCartPage.clickRemoveAll();
@@ -154,9 +126,6 @@ public class ShoppingCartTest extends BaseTest {
 
     @Test
     public void decreaseProductQuantity(){
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
         shoppingCartPage.clickRemoveAll();
@@ -178,9 +147,6 @@ public class ShoppingCartTest extends BaseTest {
 
     @Test
     public void invalidDecreaseProductQuantityMinus(){
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
         shoppingCartPage.clickRemoveAll();
@@ -204,9 +170,6 @@ public class ShoppingCartTest extends BaseTest {
 
     @Test
     public void invalidDecreaseProductQuantityZero(){
-        homePage.enterClickForLogin();
-        loginPageProject.login("mail1@gmail.com","12345");
-        homePage.clickHomeLink();
         homePage.getCartBadgeCount();
         shoppingCartPage = homePage.clickOfCartIcon();
         shoppingCartPage.clickRemoveAll();
@@ -227,4 +190,5 @@ public class ShoppingCartTest extends BaseTest {
         Assert.assertTrue(homePage.getCartBadgeCount().contains("1"));
         Assert.assertTrue(shoppingCartPage.getActualTitleEmptyCart().contains("Shopping Cart  (0.15kg)"));
     }
+
 }
