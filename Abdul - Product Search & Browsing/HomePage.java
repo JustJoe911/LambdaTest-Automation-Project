@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 public class HomePage {
 
     private WebDriver driver;
-
     private By searchInput = By.name("search");
     private By searchButton = By.className("type-text");
     private By categoryListButton = By.xpath("//a[text()=' Shop by Category']");
