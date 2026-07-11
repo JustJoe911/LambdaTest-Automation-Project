@@ -1,1 +1,29 @@
+package pages;
+import static org.testng.Assert.assertTrue;
 
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+    public class ProductPage extends BasePage {
+
+        private final HomePage homePage = new HomePage();
+
+        private final By addToCartButton = By.cssSelector("#button-cart");
+        private final By successAlert = By.cssSelector(".alert-success");
+
+        @When("I add the first available product to the cart")
+        public void i_add_the_first_available_product_to_the_cart() throws InterruptedException {
+            homePage.openFirstProduct();
+            driver.findElement(addToCartButton).click();
+            Thread.sleep(3000);
+        }
+
+        @Then("the product should be added to the cart successfully")
+        public void the_product_should_be_added_successfully() throws InterruptedException {
+            Thread.sleep(2000);
+            WebElement alert = driver.findElement(successAlert);
+            assertTrue(alert.getText().contains("Success"));
+        }
+    }
