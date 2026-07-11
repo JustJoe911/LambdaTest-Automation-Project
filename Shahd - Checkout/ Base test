@@ -1,0 +1,58 @@
+package base;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+
+import java.time.Duration;
+
+public class BaseTest {
+
+  
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+
+    protected static final String BASE_URL = "https://example.com";
+
+    @BeforeMethod
+    @Parameters({"browser"})
+    public void setUp(String browser) {
+
+        // لو مفيش parameter مبعوت من الـ testng.xml، هيشتغل Chrome كـ default
+        if (browser == null || browser.isEmpty()) {
+            browser = "chrome";
+        }
+
+        switch (browser.toLowerCase()) {
+            case "firefox":
+                driver = new FirefoxDriver();
+                break;
+
+            case "chrome":
+            default:
+                ChromeOptions options = new ChromeOptions();
+                // options.addArguments("--headless=new");
+                options.addArguments("--start-maximized");
+                driver = new ChromeDriver(options);
+                break;
+        }
+
+       
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+        driver.get(BASE_URL);
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+}
