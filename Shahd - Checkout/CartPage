@@ -1,1 +1,18 @@
+package pages;
+import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 
+public class CartPage extends BasePage {
+
+    private final By cartHeaderIcon = By.id("header-cart");
+    private final By checkoutLink = By.linkText("Checkout");
+
+    @When("I proceed to checkout as a guest")
+    public void i_proceed_to_checkout_as_a_guest() throws InterruptedException {
+        driver.findElement(cartHeaderIcon).click();
+        Thread.sleep(2000);
+        driver.findElement(checkoutLink).click();
+        Thread.sleep(3000);
+        new CheckoutPage().chooseGuestCheckout();
+    }
+}
