@@ -1,4 +1,4 @@
-package BaseTest ;
+package pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,13 +11,13 @@ import org.testng.annotations.Parameters;
 
 import java.time.Duration;
 
-public class BaseTest {
 
-  
+public class BasePage {
+
     protected WebDriver driver;
     protected WebDriverWait wait;
 
-    protected static final String BASE_URL = "https://example.com";
+    protected static final String BASE_URL = "https://ecommerce-playground.lambdatest.io/";
 
     @BeforeMethod
     @Parameters({"browser"})
@@ -35,14 +35,14 @@ public class BaseTest {
             case "chrome":
             default:
                 ChromeOptions options = new ChromeOptions();
-                // options.addArguments("--headless=new");
+
                 options.addArguments("--start-maximized");
                 driver = new ChromeDriver(options);
                 break;
         }
 
-       
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         driver.get(BASE_URL);
