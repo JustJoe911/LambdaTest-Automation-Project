@@ -1,4 +1,4 @@
-package basetest ;
+package BaseTest ;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,7 +23,6 @@ public class BaseTest {
     @Parameters({"browser"})
     public void setUp(String browser) {
 
-        // لو مفيش parameter مبعوت من الـ testng.xml، هيشتغل Chrome كـ default
         if (browser == null || browser.isEmpty()) {
             browser = "chrome";
         }
