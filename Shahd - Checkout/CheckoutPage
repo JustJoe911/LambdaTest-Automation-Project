@@ -1,1 +1,122 @@
+package pages;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.List;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+public class CheckoutPage extends BasePage {
+
+    private final By guestRadio = By.xpath("//input[@value='guest']");
+    private final By accountContinueButton = By.id("button-account");
+
+    private final By firstNameInput = By.id("input-payment-firstname");
+    private final By lastNameInput = By.id("input-payment-lastname");
+    private final By emailInput = By.id("input-payment-email");
+    private final By telephoneInput = By.id("input-payment-telephone");
+    private final By address1Input = By.id("input-payment-address-1");
+    private final By cityInput = By.id("input-payment-city");
+    private final By postcodeInput = By.id("input-payment-postcode");
+    private final By countrySelect = By.id("input-payment-country");
+    private final By zoneSelect = By.id("input-payment-zone");
+    private final By guestContinueButton = By.id("button-guest");
+    private final By requiredFieldErrors = By.cssSelector(".text-danger");
+
+    private final By shippingMethodSection = By.id("collapse-shipping-method");
+    private final By shippingOptionRadios = By.cssSelector("input[name='shipping_method']");
+    private final By shippingContinueButton = By.id("button-shipping-method");
+
+    private final By confirmSection = By.id("collapse-confirm");
+
+    // ---------- Checkout as a guest ----------
+
+    public void chooseGuestCheckout() throws InterruptedException {
+        driver.findElement(guestRadio).click();
+        Thread.sleep(1000);
+        driver.findElement(accountContinueButton).click();
+        Thread.sleep(3000);
+    }
+
+    // ---------- Validate required billing fields ----------
+
+    @And("I fill in the billing details with first name {string}, last name {string}, phone {string}, address {string}, city {string} and postcode {string}")
+    public void i_fill_in_the_billing_details(String firstName, String lastName, String phone,
+                                              String address, String city, String postcode) throws InterruptedException {
+        String email = firstName.toLowerCase() + System.currentTimeMillis() + "@test.com";
+        driver.findElement(firstNameInput).sendKeys(firstName);
+        driver.findElement(lastNameInput).sendKeys(lastName);
+        driver.findElement(emailInput).sendKeys(email);
+        driver.findElement(telephoneInput).sendKeys(phone);
+        driver.findElement(address1Input).sendKeys(address);
+        driver.findElement(cityInput).sendKeys(city);
+        driver.findElement(postcodeInput).sendKeys(postcode);
+        Thread.sleep(1000);
+    }
+
+    @And("I select country {string} and zone {string}")
+    public void i_select_country_and_zone(String country, String zone) throws InterruptedException {
+        new Select(driver.findElement(countrySelect)).selectByVisibleText(country);
+        Thread.sleep(2000);
+        new Select(driver.findElement(zoneSelect)).selectByVisibleText(zone);
+        Thread.sleep(1000);
+    }
+
+    @And("I leave the first name field empty and try to continue")
+    public void i_leave_the_first_name_field_empty_and_try_to_continue() throws InterruptedException {
+        WebElement firstName = driver.findElement(firstNameInput);
+        firstName.clear();
+        driver.findElement(guestContinueButton).click();
+        Thread.sleep(2000);
+    }
+
+    @Then("a required field validation message should be displayed")
+    public void a_required_field_validation_message_should_be_displayed() throws InterruptedException {
+        Thread.sleep(1000);
+        List<WebElement> errors = driver.findElements(requiredFieldErrors);
+        assertTrue(errors.stream().anyMatch(WebElement::isDisplayed));
+    }
+
+    @And("I continue to the shipping step")
+    public void i_continue_to_the_shipping_step() throws InterruptedException {
+        driver.findElement(guestContinueButton).click();
+        Thread.sleep(3000);
+    }
+
+    // ---------- Verify shipping options ----------
+
+    @Then("the shipping method section should be displayed")
+    public void the_shipping_method_section_should_be_displayed() throws InterruptedException {
+        Thread.sleep(2000);
+        WebElement shipping = driver.findElement(shippingMethodSection);
+        assertTrue(shipping.isDisplayed());
+    }
+
+    @And("at least one shipping option should be available")
+    public void at_least_one_shipping_option_should_be_available() {
+        assertTrue(!driver.findElements(shippingOptionRadios).isEmpty());
+    }
+
+    @When("I select the first shipping option and continue")
+    public void i_select_the_first_shipping_option_and_continue() throws InterruptedException {
+        driver.findElement(shippingOptionRadios).click();
+        Thread.sleep(1000);
+        driver.findElement(shippingContinueButton).click();
+        Thread.sleep(3000);
+    }
+
+    // ---------- Verify order summary ----------
+
+    @Then("the order summary should be displayed")
+    public void the_order_summary_should_be_displayed() throws InterruptedException {
+        Thread.sleep(2000);
+        WebElement confirm = driver.findElement(confirmSection);
+        assertTrue(confirm.isDisplayed());
+    }
+}
 
