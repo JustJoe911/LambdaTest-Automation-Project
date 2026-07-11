@@ -1,0 +1,22 @@
+package pages;
+
+import io.cucumber.java.en.Given;
+import org.openqa.selenium.By;
+
+public class HomePage extends BasePage {
+
+    private static final String URL = "https://ecommerce-playground.lambdatest.io/";
+
+    private final By firstProductLink = By.cssSelector(".product-thumb a");
+
+    @Given("I am on the ecommerce playground home page")
+    public void i_am_on_the_home_page() throws InterruptedException {
+        driver.get(URL);
+        Thread.sleep(3000);
+    }
+
+    public void openFirstProduct() throws InterruptedException {
+        driver.findElement(firstProductLink).click();
+        Thread.sleep(3000);
+    }
+}
